@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <wchar.h>
 #include <stddef.h>
 
 void print(char** strings);
@@ -67,12 +66,14 @@ char* grow_line_buffer(char* line, size_t* cur_buffer_size) {
     if(!line || !cur_buffer_size)
         return NULL;
 
-    char* temp_line = (char*) realloc(line, *cur_buffer_size * 2);
+    *cur_buffer_size *= 2;
+
+    char* temp_line = (char*) realloc(line, *cur_buffer_size);
     if(!temp_line) {
         free(line);
         return NULL;
     }
-    *cur_buffer_size *= 2;
+
     return temp_line;
 }
 
